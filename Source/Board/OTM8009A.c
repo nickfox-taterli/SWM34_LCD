@@ -45,11 +45,11 @@ static void LCD_WriteData(unsigned char Data)
 }
 
 void LCD_SPI_Init_OTM8009A(void){
-  // PC8 -> ¸´Î»
+  // PC8 -> å¤ä½
 
-  PORTC->FUNC1 &= ~0x0000000F; // È¡Ïû¸´ÓÃ¹¦ÄÜ
-  GPIOC->DIR |= (1 << 8); // Êä³öÒý½Å
-  PORTC->PULLU |= (1 << 8); // Òý½ÅÉÏÀ­
+  PORTC->FUNC1 &= ~0x0000000F; // å–æ¶ˆå¤ç”¨åŠŸèƒ½
+  GPIOC->DIR |= (1 << 8); // è¾“å‡ºå¼•è„š
+  PORTC->PULLU |= (1 << 8); // å¼•è„šä¸Šæ‹‰
   
   GPIOC->DATAPIN8 = 1;
   SYS_Delay(100);
@@ -59,17 +59,17 @@ void LCD_SPI_Init_OTM8009A(void){
   SYS_Delay(200);
     
   // PD0 -> LCD_BL / PD1 -> LCD_CS
-  PORTD->FUNC0 &= ~0x000000FF; // È¡Ïû¸´ÓÃ¹¦ÄÜ
-  GPIOD->DIR |= (1 << 0) | (1 << 1); // Êä³öÒý½Å
-  PORTD->PULLU |= (1 << 0) | (1 << 1); // Òý½ÅÉÏÀ­
+  PORTD->FUNC0 &= ~0x000000FF; // å–æ¶ˆå¤ç”¨åŠŸèƒ½
+  GPIOD->DIR |= (1 << 0) | (1 << 1); // è¾“å‡ºå¼•è„š
+  PORTD->PULLU |= (1 << 0) | (1 << 1); // å¼•è„šä¸Šæ‹‰
   
   GPIOD->DATAPIN0 = 1;
   GPIOD->DATAPIN1 = 1;
 	
   // PC4 -> LCD_SDA / PC5 -> LCD_SCK
-  PORTC->FUNC0 &= ~0x00FF0000; // È¡Ïû¸´ÓÃ¹¦ÄÜ
-  GPIOC->DIR |= (1 << 4) | (1 << 5); // Êä³öÒý½Å
-  PORTC->PULLU |= (1 << 4) | (1 << 5); // Òý½ÅÉÏÀ­
+  PORTC->FUNC0 &= ~0x00FF0000; // å–æ¶ˆå¤ç”¨åŠŸèƒ½
+  GPIOC->DIR |= (1 << 4) | (1 << 5); // è¾“å‡ºå¼•è„š
+  PORTC->PULLU |= (1 << 4) | (1 << 5); // å¼•è„šä¸Šæ‹‰
   
   GPIOC->DATAPIN4 = 1;
   GPIOC->DATAPIN5 = 1;
@@ -387,4 +387,55 @@ void LCD_SPI_Init_OTM8009A(void){
   SYS_Delay(20);     
   LCD_WriteCommand(0x2c,0x00);
   SYS_Delay(20);
+}
+
+void LCD_RGB_Init_OTM8009A(void){
+  // ä¸‹åˆ—å¤§å¤šæ•°ä»£ç æ¥è‡ªå…¬ç‰ˆæ–‡ä»¶ä¸”æ²¡ä»€ä¹ˆå¯è¯»æ€§!
+  
+  // RGB æ˜¾ç¤ºä¿¡å· (æ¥è‡ªå…¬ç‰ˆæ–‡ä»¶)
+  PORTC->FUNC0 &= ~0x0000FFFF;
+  PORTC->FUNC0 |=  0x00006665;
+  PORTC->FUNC1 &= ~0x00FFFF00;
+  PORTC->FUNC1 |=  0x00634400;
+
+  PORTA->FUNC0 &= ~0x00000F00;
+  PORTA->FUNC0 |=  0x00000400;
+  PORTA->FUNC1 &= ~0xFF00FF00;
+  PORTA->FUNC1 |=  0x22004500;
+
+  PORTB->FUNC0 &= ~0x00FFFF00;
+  PORTB->FUNC0 |=  0x00667600;
+  PORTB->FUNC1 &= ~0xF0000000;
+  PORTB->FUNC1 |=  0x70000000;
+
+  PORTC->FUNC0 &= ~0x0000FFFF;
+  PORTC->FUNC0 |=  0x00006665;
+  PORTC->FUNC1 &= ~0x00FFFF00;
+  PORTC->FUNC1 |=  0x00634400;
+  
+  SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_LCD_Pos);
+  
+  // RGB æ—¶åºé…ç½® (ä¹Ÿæ¥è‡ªå…¬ç‰ˆæ–‡ä»¶é©±åŠ¨800x480å±å¹•)
+  LCD->CR = 0x00008384;
+  LCD->CRH = 0x4DDF1301;
+  LCD->CRV = 0x3F1F0F09;
+  LCD->BGC = 0x0000FFFF;
+  
+  // å›¾å±‚åˆå§‹åŒ–
+  LCD->L[0].LCR = 0x000001FF;
+  LCD->L[0].WHP = 0x01DF0000;
+  LCD->L[0].WVP = 0x031F0000;
+  LCD->L[0].ADDR = 0x80000000; // åŽé¢ä¼šè¢«LVGLé©±åŠ¨è¦†ç›–
+  LCD->L[0].LLEN = 480 - 1;
+  
+  LCD->IF = 1;
+  LCD->IE = 1;
+  
+  NVIC_EnableIRQ(LCD_IRQn);
+}
+
+void LCD_Handler(void)
+{
+  LCD->IF = 1;
+  LCD->START |= (1 << LCD_START_GO_Pos);
 }

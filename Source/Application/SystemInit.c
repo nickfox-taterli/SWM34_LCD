@@ -18,44 +18,44 @@ void SystemInit(void)
 {
   uint32_t i = 0;
 
-  // ÏµÍ³³õÊ¼»¯È«³ÌÁÙÊ±¹Ø±ÕÖÐ¶Ï
+  // ç³»ç»Ÿåˆå§‹åŒ–å…¨ç¨‹ä¸´æ—¶å…³é—­ä¸­æ–­
   __disable_irq();
 
   SYS->CLKEN0 |= (1 << SYS_CLKEN0_ANAC_Pos);
 
-  // ÅäÖÃFlash¶ÁÐ´ÑÓ³Ù?
+  // é…ç½®Flashè¯»å†™å»¶è¿Ÿ?
   ((int (*)(uint32_t, uint32_t, uint32_t))0x11000431)(0x16589, 0x4C74, 0x0B11FFAC);
 
-  // ¿ªÆôÄÚ²¿20MHzÕðµ´
+  // å¼€å¯å†…éƒ¨20MHzéœ‡è¡
   SYS->HRCCR = (1 << SYS_HRCCR_ON_Pos) | (0 << SYS_HRCCR_DBL_Pos); // HRC = 20Hz
 
-  // ¸øÓèÒ»¶¨ÑÓ³ÙÊ¹µÃÊ±ÖÓÎÈ¶¨ÆðÀ´.
+  // ç»™äºˆä¸€å®šå»¶è¿Ÿä½¿å¾—æ—¶é’Ÿç¨³å®šèµ·æ¥.
   for (i = 0; i < 20000; i++)
     __NOP();
 
-  // ÏÈ°ÑÏµÍ³Ê±ÖÓÇÐ»»µ½ÄÚ²¿20MHz(HRC).
+  // å…ˆæŠŠç³»ç»Ÿæ—¶é’Ÿåˆ‡æ¢åˆ°å†…éƒ¨20MHz(HRC).
   SYS->CLKSEL |= (1 << SYS_CLKSEL_SYS_Pos);
 
-  // ¾§ÌåÒý½ÅÒªÉèÖÃ(¾ÓÈ»²»ÊÇÉÏµçÄ¬ÈÏ¾§Ìå¹¦ÄÜ)
+  // æ™¶ä½“å¼•è„šè¦è®¾ç½®(å±…ç„¶ä¸æ˜¯ä¸Šç”µé»˜è®¤æ™¶ä½“åŠŸèƒ½)
 
   // PA3,PA4 => XTAL
   PORTA->FUNC0 &= ~0x000FF000;
   PORTA->FUNC0 |= 0x000FF000;
   PORTA->INEN &= ~((1 << 3) | (1 << 4));
 
-  // XTALÆô¶¯
+  // XTALå¯åŠ¨
   SYS->XTALCR |= (1 << SYS_XTALCR_ON_Pos) | (15 << SYS_XTALCR_DRV_Pos) | (1 << SYS_XTALCR_DET_Pos);
 
-  // ¸øÓèÒ»¶¨ÑÓ³ÙÊ¹µÃÊ±ÖÓÎÈ¶¨ÆðÀ´.
+  // ç»™äºˆä¸€å®šå»¶è¿Ÿä½¿å¾—æ—¶é’Ÿç¨³å®šèµ·æ¥.
   for (i = 0; i < 20000; i++)
     __NOP();
   for (i = 0; i < 20000; i++)
     __NOP();
 
-  // ÇÐ»»PLLÔ´Ê±ÖÓµ½XTAL
+  // åˆ‡æ¢PLLæºæ—¶é’Ÿåˆ°XTAL
   SYS->PLLCR &= ~(1 << SYS_PLLCR_INSEL_Pos);
 
-  // ÅäÖÃPLL²ÎÊý,Ä¿±ê150MHz.
+  // é…ç½®PLLå‚æ•°,ç›®æ ‡150MHz.
   SYS->PLLDIV &= ~(SYS_PLLDIV_INDIV_Msk |
                    SYS_PLLDIV_FBDIV_Msk |
                    SYS_PLLDIV_OUTDIV_Msk);
@@ -63,33 +63,33 @@ void SystemInit(void)
                  (PLL_FB_DIV << SYS_PLLDIV_FBDIV_Pos) |
                  (PLL_OUT_DIV << SYS_PLLDIV_OUTDIV_Pos);
 
-  // Æô¶¯PLL.
+  // å¯åŠ¨PLL.
   SYS->PLLCR &= ~(1 << SYS_PLLCR_OFF_Pos);
 
-  // µÈ´ýPLLËø¶¨
+  // ç­‰å¾…PLLé”å®š
   while (SYS->PLLLOCK == 0)
     ;
 
-  // PLLÊä³ö.
+  // PLLè¾“å‡º.
   SYS->PLLCR |= (1 << SYS_PLLCR_OUTEN_Pos);
 
-  // 1 = ¹Ø±ÕCLKDIV
+  // 1 = å…³é—­CLKDIV
   SYS->CLKDIVx_ON = 1;
 
-  // ÇÐ»»ÄÚ²¿Ê±ÖÓÔ´Ê±ÖÓµ½PLL.
+  // åˆ‡æ¢å†…éƒ¨æ—¶é’Ÿæºæ—¶é’Ÿåˆ°PLL.
   SYS->CLKSEL &= ~SYS_CLKSEL_CLK_Msk;
   SYS->CLKSEL |= (1 << SYS_CLKSEL_CLK_Pos);
 
-  // PLL ²»·ÖÆµ
+  // PLL ä¸åˆ†é¢‘
   SYS->CLKSEL &= ~(1 << SYS_CLKSEL_CLK_DIVx_Pos);
 
-  // Ñ¡ÔñÄÚ²¿Ê±ÖÓÔ´Îª×îÖÕÏµÍ³Ê±ÖÓ,¼´PLL.
+  // é€‰æ‹©å†…éƒ¨æ—¶é’Ÿæºä¸ºæœ€ç»ˆç³»ç»Ÿæ—¶é’Ÿ,å³PLL.
   SYS->CLKSEL &= ~(1 << SYS_CLKSEL_SYS_Pos);
 
   SystemCoreClock = HSE_VALUE / PLL_IN_DIV * PLL_FB_DIV * 4 / (2 << (2 - PLL_OUT_DIV));
   CyclesPerUs = SystemCoreClock / 1000000;
 
-  // ´ò¿ªËùÓÐIOÊ±ÖÓ
+  // æ‰“å¼€æ‰€æœ‰IOæ—¶é’Ÿ
   SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_GPIOA_Pos);
   SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_GPIOB_Pos);
   SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_GPIOC_Pos);
@@ -99,7 +99,7 @@ void SystemInit(void)
 
   SysTick_Config(SystemCoreClock / 1000);
 
-  // »Ö¸´ÖÐ¶Ï
+  // æ¢å¤ä¸­æ–­
   __enable_irq();
 }
 
@@ -114,48 +114,60 @@ void SerialInit(uint32_t Baudrate)
     
     SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_UART0_Pos);
   
-    // ÏÈ½ûÓÃÍâÉèÔÙÉèÖÃ.
+    // å…ˆç¦ç”¨å¤–è®¾å†è®¾ç½®.
     UART0->CTRL &= ~(0x01 << UART_CTRL_EN_Pos);
     
     UART0->BAUD &= ~(UART_BAUD_BAUD_Msk | UART_BAUD_FRAC_Msk);
     UART0->BAUD |= (((SystemCoreClock/Baudrate - 1) / 16) << UART_BAUD_BAUD_Pos) | 
                    (((SystemCoreClock/Baudrate - 1) % 16) << UART_BAUD_FRAC_Pos);
     
-    // CTRLÅäÖÃ(Ä¬ÈÏ¾ÍÊÇ8Î»ÎÞÐ£Ñé,1Í£Ö¹Î»,ÎÞ³¬Ê±ºÍFIFO¹ÜÀí)
+    // CTRLé…ç½®(é»˜è®¤å°±æ˜¯8ä½æ— æ ¡éªŒ,1åœæ­¢ä½,æ— è¶…æ—¶å’ŒFIFOç®¡ç†)
     // UART0->CTRL |= ...
     
-    // ¿ªÆôÍâÉè
+    // å¼€å¯å¤–è®¾
     UART0->CTRL |= (0x01 << UART_CTRL_EN_Pos);
 }
 
 void SDRAMInit(void){
-    PORTB->FUNC0 &= ~0xFF000000;
-    PORTB->FUNC0 |=  0x11000000;
-    PORTB->FUNC1 &= ~0x00000FFF;
-    PORTB->FUNC1 |=  0x00000444;
-    
-    PORTC->FUNC1 &= ~0xFF000000;
-    PORTC->FUNC1 |=  0x11000000;
-    PORTC->INEN  |= (1 << 15) | (1 << 14);
-    
-    PORTE->FUNC0 = 0x11111111;
-    PORTE->FUNC1 = 0x11111111;
-    PORTE->INEN  |= 0x3FFF;
+  PORTB->FUNC0 &= ~0xFF000000;
+  PORTB->FUNC0 |=  0x11000000;
+  PORTB->FUNC1 &= ~0x00000FFF;
+  PORTB->FUNC1 |=  0x00000444;
+  
+  PORTC->FUNC1 &= ~0xFF000000;
+  PORTC->FUNC1 |=  0x11000000;
+  PORTC->INEN  |= (1 << 15) | (1 << 14);
+  
+  PORTE->FUNC0 = 0x11111111;
+  PORTE->FUNC1 = 0x11111111;
+  PORTE->INEN  |= 0x3FFF;
 
-    PORTM->FUNC1 &= ~0xFFFF0000;
-    PORTM->FUNC1 |=  0x33220000;
-    
-    PORTN->FUNC0 &= ~0xFF00FF00;
-    PORTN->FUNC0 |=  0x11002100;
-    PORTN->FUNC1 = 0x11111111;
-    
-    SYS->CLKEN1 |= (1 << SYS_CLKEN1_SDRAM_Pos);
+  PORTM->FUNC1 &= ~0xFFFF0000;
+  PORTM->FUNC1 |=  0x33220000;
+  
+  PORTN->FUNC0 &= ~0xFF00FF00;
+  PORTN->FUNC0 |=  0x11002100;
+  PORTN->FUNC1 = 0x11111111;
 
-    SDRAMC->TIM = 0x00000059 | ((CyclesPerUs * 200)  << SDRAMC_TIM_T100US_Pos);
-    SDRAMC->CFG = 0x00000004;
-    SDRAMC->T64 = (64*1000 / 4096 + 1) * CyclesPerUs;
-
-    SDRAMC->CR = (1 << SDRAMC_CR_PWRON_Pos);
+  SYS->CLKEN1 |= (1 << SYS_CLKEN1_SDRAM_Pos);
 	
-    while(SDRAMC->CR & SDRAMC_CR_PWRON_Msk) __NOP();	
+  SDRAMC->TIM = (1  << SDRAMC_TIM_TRP_Pos) |
+              (1 << SDRAMC_TIM_TRCD_Pos) |
+              (8 << SDRAMC_TIM_TRFC_Pos) |
+              ((CyclesPerUs * 200)  << SDRAMC_TIM_T100US_Pos);
+
+  SDRAMC->CFG = (0 /* SDRAM_SIZE_8MB */       << SDRAMC_CFG_SIZE_Pos)     |
+              (0 /* SDRAM_CLKDIV_1 */   << SDRAMC_CFG_CLKDIV_Pos)   |
+              (1 /* SDRAM_CASLATENCY_3 */ << SDRAMC_CFG_CASDELAY_Pos) |
+              (((SystemCoreClock) > 66000000) << SDRAMC_CFG_HIGHFREQ_Pos);
+
+  SDRAMC->T64 = (64*1000 / 4096 /* SDRAM_SIZE_8MB */ + 1) * CyclesPerUs;
+
+  SDRAMC->CR = (1 << SDRAMC_CR_PWRON_Pos);
+  SDRAMC->CR &= ~SDRAMC_CR_ENTERSRF_Msk;
+  
+  SYS_Delay(100);
+  
+  // æˆ‘ä¹Ÿæƒ³æ­£è§„åˆ¤æ–­,ä½†æ˜¯ä»–å¶å°”å¤±æ•ˆ,ç»æµ‹è¯•,å»¶è¿Ÿä¸€ä¼šç­‰å¾…æ›´é è°±?
+  // while(SDRAMC->CR & SDRAMC_CR_PWRON_Msk) __NOP();
 }

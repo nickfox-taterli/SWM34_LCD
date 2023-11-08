@@ -46,6 +46,8 @@ define block CSTACK     with alignment = 8, size = __ICFEDIT_size_cstack__     {
 define block PROC_STACK with alignment = 8, size = __ICFEDIT_size_proc_stack__ { };
 define block HEAP       with alignment = 8, size = __ICFEDIT_size_heap__       { };
 
+define region SDRAM_region  = mem:[from 0x80000000 to 0x80800000];
+
 do not initialize  { section .noinit };
 initialize by copy { readwrite };
 if (isdefinedsymbol(__USE_DLIB_PERTHREAD))
@@ -61,5 +63,4 @@ place in EROM_region  { readonly section application_specific_ro };
 place in IRAM_region  { readwrite, block CSTACK, block PROC_STACK, block HEAP };
 place in ERAM_region  { readwrite section application_specific_rw };
 
-define region SDRAM_region  = mem:[from 0x80000000 to 0x80800000];
 place in SDRAM_region {section .SDRAM};
