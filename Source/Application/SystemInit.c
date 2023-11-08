@@ -166,8 +166,6 @@ void SDRAMInit(void){
   SDRAMC->CR = (1 << SDRAMC_CR_PWRON_Pos);
   SDRAMC->CR &= ~SDRAMC_CR_ENTERSRF_Msk;
   
-  SYS_Delay(100);
-  
   // 我也想正规判断,但是他偶尔失效,经测试,延迟一会等待更靠谱?
   // while(SDRAMC->CR & SDRAMC_CR_PWRON_Msk) __NOP();
 }

@@ -427,9 +427,11 @@
                     <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\widgets\textarea</state>
                     <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\widgets\tileview</state>
                     <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\widgets\win</state>
-                    <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\stdlib\builtin</state>
                     <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\stdlib</state>
+                    <state>$PROJ_DIR$\Source\ThirdParty\lvgl\src\stdlib\builtin</state>
                     <state>$PROJ_DIR$\Source\ThirdParty\lvgl\demos</state>
+                    <state>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\include</state>
+                    <state>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\portable\IAR\ARM_CM33_NTZ\non_secure</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -697,11 +699,13 @@
                 </option>
                 <option>
                     <name>AIgnoreStdInclude</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\include</state>
+                    <state>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\portable\IAR\ARM_CM33_NTZ\non_secure</state>
+                    <state>$PROJ_DIR$\Source\Application\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -2264,18 +2268,54 @@
         <file>
             <name>$PROJ_DIR$\Source\Application\SystemInit.c</name>
         </file>
-        <file>
-            <name>$PROJ_DIR$\Source\Application\SysTick.c</name>
-        </file>
     </group>
     <group>
         <name>BSP</name>
+        <file>
+            <name>$PROJ_DIR$\Source\Board\FT5206.c</name>
+        </file>
         <file>
             <name>$PROJ_DIR$\Source\Board\OTM8009A.c</name>
         </file>
     </group>
     <group>
         <name>ThirdParty</name>
+        <group>
+            <name>FreeRTOS</name>
+            <group>
+                <name>port</name>
+                <file>
+                    <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\portable\MemMang\heap_4.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\portable\IAR\ARM_CM33_NTZ\non_secure\port.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\portable\IAR\ARM_CM33_NTZ\non_secure\portasm.s</name>
+                </file>
+            </group>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\croutine.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\event_groups.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\list.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\queue.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\stream_buffer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\tasks.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\ThirdParty\FreeRTOS-Kernel\timers.c</name>
+            </file>
+        </group>
         <group>
             <name>LVGL</name>
             <group>
@@ -3000,6 +3040,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\Source\Application\lv_port_disp.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\Source\Application\lv_port_indev.c</name>
             </file>
         </group>
     </group>

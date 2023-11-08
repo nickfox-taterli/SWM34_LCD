@@ -1,5 +1,8 @@
 #include "SWM341.h"
-#include "SysTick.h"
+#include "OTM8009A.h"
+
+#include "FreeRTOS.h"
+#include "task.h"
 
 static void LL_WriteData(unsigned char i)
 {
@@ -52,11 +55,11 @@ void LCD_SPI_Init_OTM8009A(void){
   PORTC->PULLU |= (1 << 8); // 引脚上拉
   
   GPIOC->DATAPIN8 = 1;
-  SYS_Delay(100);
+  vTaskDelay(100);
   GPIOC->DATAPIN8 = 0;
-  SYS_Delay(500);
+  vTaskDelay(500);
   GPIOC->DATAPIN8 = 1;
-  SYS_Delay(200);
+  vTaskDelay(200);
     
   // PD0 -> LCD_BL / PD1 -> LCD_CS
   PORTD->FUNC0 &= ~0x000000FF; // 取消复用功能
@@ -96,7 +99,7 @@ void LCD_SPI_Init_OTM8009A(void){
                                         
   //VCOMDC                                                                   
   LCD_WriteCommand(0xD9,0x00); LCD_WriteData(0x67);     // VCOMDC= 6A  
-  SYS_Delay(20);                         
+  vTaskDelay(20);                         
                         
   // Positive           
   LCD_WriteCommand(0xE1,0x00); LCD_WriteData(0x09);
@@ -382,11 +385,11 @@ void LCD_SPI_Init_OTM8009A(void){
   LCD_WriteCommand(0x3A,0x00); LCD_WriteData(0x77);     //RGB 32bits D[23:0]
 
   LCD_WriteCommand(0x11,0x00);
-  SYS_Delay(20);	        
+  vTaskDelay(20);	        
   LCD_WriteCommand(0x29,0x00);
-  SYS_Delay(20);     
+  vTaskDelay(20);     
   LCD_WriteCommand(0x2c,0x00);
-  SYS_Delay(20);
+  vTaskDelay(20);
 }
 
 void LCD_RGB_Init_OTM8009A(void){
