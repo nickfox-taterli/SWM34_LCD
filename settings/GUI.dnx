@@ -46,10 +46,10 @@
         <MemConfigValue>C:\Program Files\IAR Systems\Embedded Workbench 9.2\arm\config\debugger\Synwit\SWM341.ddf</MemConfigValue>
     </PlDriver>
     <Jet>
-        <JetConnSerialNo>CMSIS-DAP-HS-MuseLab:110136025020322034464855303035323831303797969903</JetConnSerialNo>
-        <JetConnFoundProbes />
         <PrevWtdReset>System</PrevWtdReset>
         <OnlineReset>Software</OnlineReset>
+        <JetConnSerialNo>CMSIS-DAP-HS-MuseLab:110136025020322034464855303035323831303797969903</JetConnSerialNo>
+        <JetConnFoundProbes />
         <DisableInterrupts>0</DisableInterrupts>
         <LeaveRunning>0</LeaveRunning>
         <MultiCoreRunAll>0</MultiCoreRunAll>
@@ -59,7 +59,7 @@
         <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
     </ArmDriver>
     <DebugChecksum>
-        <Checksum>1393336075</Checksum>
+        <Checksum>1430205154</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -74,8 +74,8 @@
     <SWOManager>
         <SamplingDivider>8192</SamplingDivider>
         <OverrideClock>0</OverrideClock>
-        <CpuClock>1928141456</CpuClock>
-        <SwoClock>398</SwoClock>
+        <CpuClock>4248302216</CpuClock>
+        <SwoClock>614</SwoClock>
         <DataLogMode>0</DataLogMode>
         <ItmPortsEnabled>63</ItmPortsEnabled>
         <ItmTermIOPorts>1</ItmTermIOPorts>
@@ -123,7 +123,8 @@
     </DisassembleMode>
     <Breakpoints2>
         <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\Source\ThirdParty\lvgl\src\osal\lv_freertos.c}.82.5" 0 0 1 "" 0 "" 0</Bp0>
-        <Count>1</Count>
+        <Bp1>_ 1 "EMUL_CODE" "{$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\lv_demo_benchmark.c}.381.1" 0 0 1 "" 0 "" 0</Bp1>
+        <Count>2</Count>
     </Breakpoints2>
     <Aliases>
         <Count>0</Count>

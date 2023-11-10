@@ -23,7 +23,6 @@ void SystemInit(void)
 
   SYS->CLKEN0 |= (1 << SYS_CLKEN0_ANAC_Pos);
 
-  // 配置Flash读写延迟?
   ((int (*)(uint32_t, uint32_t, uint32_t))0x11000431)(0x16589, 0x4C74, 0x0B11FFAC);
 
   // 开启内部20MHz震荡

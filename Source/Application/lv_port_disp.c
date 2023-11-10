@@ -121,8 +121,7 @@ static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t 
 
       LCD->L[LCD_LAYER_1].ADDR = (uint32_t)px_map;
       LCD->CR |= (1 << LCD_CR_VBPRELOAD_Pos);
-      while (0 != (LCD->CR & LCD_CR_VBPRELOAD_Msk))
-		__NOP();
+      while (0 != (LCD->CR & LCD_CR_VBPRELOAD_Msk)) {};
 
     }
 

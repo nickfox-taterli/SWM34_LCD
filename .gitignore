@@ -19,10 +19,7 @@
 **/settings/*.wspos
 
 # IAR Debug Exe
-**/Debug/Exe/
-
-# IAR Debug List
-**/Debug/List
+**/Debug
 
 # IAR Debug Obj
 **/Obj/*.pbd

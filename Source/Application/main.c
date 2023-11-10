@@ -13,31 +13,25 @@
 
 void vApplicationTickHook()
 {
-    lv_tick_inc(1);
+  lv_tick_inc(1);
 }
 
 void task_lvgl(void *arg)
 {
-    // 等待其他外设OK
-    vTaskDelay(200);
-    
-    lv_init();
-    lv_port_disp_init();
-    lv_port_indev_init();
-    
-    lv_demo_widgets();
+  // 等待其他外设OK
+  vTaskDelay(200);
+  
+  lv_init();
+  lv_port_disp_init();
+  lv_port_indev_init();
 
-    TickType_t xLastWakeTime;
-    const TickType_t xPeriod = pdMS_TO_TICKS( 1 );
-
-    xLastWakeTime = xTaskGetTickCount();  
+  lv_demo_widgets();
     
-    while(1)
-    {
-        vTaskDelayUntil( &xLastWakeTime,xPeriod );
-        lv_task_handler();
-    }
-    vTaskDelete(NULL);
+  while(1)
+  {
+      lv_task_handler();
+  }
+  vTaskDelete(NULL);
 }
 
 int main(void)

@@ -227,7 +227,7 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state></state>
+                    <state>LV_LVGL_H_INCLUDE_SIMPLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -288,7 +288,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>10010100</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -447,7 +447,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -456,7 +456,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -2362,6 +2362,54 @@
             </group>
             <group>
                 <name>demos</name>
+                <group>
+                    <name>benchmark</name>
+                    <group>
+                        <name>assets</name>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_alpha256.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_argb.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_indexed16.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_rgb.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\lv_font_benchmark_montserrat_12_compr_az.c.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\lv_font_benchmark_montserrat_16_compr_az.c.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\assets\lv_font_benchmark_montserrat_28_compr_az.c.c</name>
+                        </file>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\benchmark\lv_demo_benchmark.c</name>
+                    </file>
+                </group>
+                <group>
+                    <name>stress</name>
+                    <file>
+                        <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\stress\lv_demo_stress.c</name>
+                    </file>
+                </group>
+                <group>
+                    <name>transform</name>
+                    <group>
+                        <name>assets</name>
+                        <file>
+                            <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\transform\assets\img_transform_avatar_15.c</name>
+                        </file>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\Source\ThirdParty\lvgl\demos\transform\lv_demo_transform.c</name>
+                    </file>
+                </group>
                 <group>
                     <name>widgets</name>
                     <group>
